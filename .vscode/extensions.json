@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "apollographql.vscode-apollo",
+    "ms-azuretools.vscode-docker",
+    "mikestead.dotenv",
+    "editorconfig.editorconfig",
+    "perkovec.emoji",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "codezombiech.gitignore",
+    "graphql.vscode-graphql",
+    "orta.vscode-jest",
+    "andys8.jest-snippets",
+    "jock.svg"
+  ]
+}
