@@ -1,7 +1,12 @@
 import { gql, useMutation } from "@apollo/client";
 import { LoginMutation, LoginMutationVariables } from "api-types";
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { routerPaths } from "routers/routerPaths";
+import { isLoggedInVar, jwtToken } from "apolloConfig";
+import { LOCALSTORAGE_TOKEN } from "constants/constants";
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($loginInput: LoginInput!) {
@@ -19,10 +24,11 @@ interface AuthFormFields {
 }
 type LoginPageProps = {};
 
-const LoginPage = (props: LoginPageProps) => {
-  const [loginMutation] = useMutation<LoginMutation, LoginMutationVariables>(
-    LOGIN_MUTATION
-  );
+const LoginPage: React.FC<LoginPageProps> = () => {
+  const [loginMutation, { loading, data: loginMutationData }] = useMutation<
+    LoginMutation,
+    LoginMutationVariables
+  >(LOGIN_MUTATION, {});
 
   const {
     register,
@@ -30,15 +36,28 @@ const LoginPage = (props: LoginPageProps) => {
     formState: { errors },
   } = useForm<AuthFormFields>();
 
-  const onSubmit = async (value: AuthFormFields) => {
-    const { data } = await loginMutation({ variables: { loginInput: value } });
-    if (data?.login.ok && data?.login.token) {
-      console.log(data);
+  const onCompleted = ({ login }: LoginMutation) => {
+    const { ok, token } = login;
+    if (ok && token) {
+      localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+      jwtToken(token);
+      isLoggedInVar(true);
     }
+  };
+
+  const onSubmit = async (value: AuthFormFields) => {
+    if (loading) return;
+    await loginMutation({
+      variables: { loginInput: value },
+      onCompleted,
+    });
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-800">
+      <Helmet>
+        <title>Login | Food Service</title>
+      </Helmet>
       <div className="bg-white w-full max-w-lg pt-5 pb-7 rounded-lg text-center">
         <h3 className="text-2xl text-gray-800">Login</h3>
         <form
@@ -64,8 +83,19 @@ const LoginPage = (props: LoginPageProps) => {
             <span className="error">{errors.password.message}</span>
           )}
           <button type="submit" className="button">
-            Log In
+            {loading ? "Loading..." : "Log In"}
           </button>
+          {loginMutationData?.login.error && (
+            <span className="error justify-start">
+              {loginMutationData.login.error}
+            </span>
+          )}
+          <div>
+            New user?{" "}
+            <Link className="underline" to={routerPaths.signUp}>
+              Create an account
+            </Link>
+          </div>
         </form>
       </div>
     </div>
