@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { routerPaths } from "routers/routerPaths";
-import { isLoggedInVar, jwtToken } from "apolloConfig";
+import { isLoggedInVar, jwtToken } from "apollo/config";
 import { LOCALSTORAGE_TOKEN } from "constants/constants";
 
 const LOGIN_MUTATION = gql`

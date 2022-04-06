@@ -37,6 +37,8 @@
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/ban-types": "off",
     "no-restricted-exports": "off",
-    "react-hooks/exhaustive-deps": 1
+    "react/require-default-props": "off",
+    "react-hooks/exhaustive-deps": 1,
+    "react/no-unused-prop-types": 1
   }
 }

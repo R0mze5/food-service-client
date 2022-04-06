@@ -1,5 +1,5 @@
 import { useReactiveVar } from "@apollo/client";
-import { isLoggedInVar } from "./apolloConfig";
+import { isLoggedInVar } from "./apollo/config";
 import LoggedInRouter from "./routers/LoggedInRouter";
 import LoggedOutRouter from "./routers/LoggedOutRouter";
 import "./index.css";

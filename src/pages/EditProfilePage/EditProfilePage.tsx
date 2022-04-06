@@ -5,7 +5,7 @@ import { useProfile } from "hooks/useProfile";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { VERIFY_EMAIL } from "schemas";
+import { VERIFY_EMAIL } from "apollo/schemas";
 
 interface EditProfileFormFields {
   email?: string;

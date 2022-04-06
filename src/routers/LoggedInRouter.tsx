@@ -1,6 +1,9 @@
 import Header from "components/Header";
 import { useProfile } from "hooks/useProfile";
-import Restaurants from "pages/client/Restaurants/Restaurants";
+import CategoryPage from "pages/client/CategoryPage";
+import RestaurantDetailsPage from "pages/client/RestaurantDetailsPage";
+import RestaurantsPage from "pages/client/RestaurantsPage";
+import SearchPage from "pages/client/SearchPage";
 import ConfirmEmail from "pages/ConfirmEmail";
 import EditProfilePage from "pages/EditProfilePage";
 import NotFound from "pages/NotFound";
@@ -9,8 +12,19 @@ import { routerPaths } from "./routerPaths";
 
 const ClientRoutes = (
   <>
-    <Route path={routerPaths.client.restaurants} element={<Restaurants />} />
-    <Route path={routerPaths.client.restaurants} element={<Restaurants />} />
+    <Route
+      path={routerPaths.client.restaurants}
+      element={<RestaurantsPage />}
+    />
+    <Route path={routerPaths.client.search} element={<SearchPage />} />
+    <Route
+      path={`${routerPaths.client.category}/:slug`}
+      element={<CategoryPage />}
+    />
+    <Route
+      path={`${routerPaths.client.restaurant}/:id`}
+      element={<RestaurantDetailsPage />}
+    />
   </>
 );
 

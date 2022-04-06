@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation, useNavigate } from "react-router-dom";
 import { routerPaths } from "routers/routerPaths";
-import { VERIFY_EMAIL } from "schemas";
+import { VERIFY_EMAIL } from "apollo/schemas";
 
 const ConfirmEmail: React.FC = () => {
   const client = useApolloClient();

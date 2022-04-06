@@ -4,6 +4,9 @@ export const routerPaths = {
   signUp: "/create-account",
   client: {
     restaurants: "/restaurants",
+    search: "/search",
+    category: "/category",
+    restaurant: "/restaurant",
   },
   profile: "/profile",
   editProfile: "/edit-profile",
