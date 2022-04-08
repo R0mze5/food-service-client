@@ -7,6 +7,7 @@ import { routerPaths } from "routers/routerPaths";
 
 const Header: React.FC = () => {
   const { data } = useProfile();
+
   return (
     <>
       {!data?.getProfile.emailVerified && (

@@ -5,6 +5,8 @@ import {
   CreateAccountMutationVariables,
   UserRole,
 } from "api-types";
+import { CREATE_ACCOUNT_MUTATION } from "apollo/schemas";
+import ErrorTip from "components/ErrorTip";
 
 import React from "react";
 import { Helmet } from "react-helmet-async";
@@ -12,14 +14,6 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { routerPaths } from "routers/routerPaths";
 
-const CREATE_ACCOUNT_MUTATION = gql`
-  mutation CreateAccountMutation($createAccountInput: CreateAccountInput!) {
-    createAccount(input: $createAccountInput) {
-      ok
-      error
-    }
-  }
-`;
 interface AuthFormFields {
   email: string;
   password: string;
@@ -47,6 +41,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = () => {
     formState: { errors },
   } = useForm<AuthFormFields>({
     defaultValues: { role: Roles.Client as unknown as UserRole.Client },
+    mode: "onChange",
   });
 
   const onSubmit = async (value: AuthFormFields) => {
@@ -83,7 +78,11 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = () => {
             className="input"
           />
           {errors.email && (
-            <span className="error">{errors.email.message}</span>
+            <ErrorTip>
+              {errors.email.type === "pattern"
+                ? "Wrong email"
+                : errors.email.message}
+            </ErrorTip>
           )}
           <input
             {...register("password", { required: "Password is required" })}
@@ -91,9 +90,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = () => {
             placeholder="Password"
             className="input"
           />
-          {errors.password && (
-            <span className="error">{errors.password.message}</span>
-          )}
+          {errors.password && <ErrorTip>{errors.password.message}</ErrorTip>}
           <select
             className="input appearance-none"
             {...register("role", { required: "Role is required" })}
@@ -108,7 +105,7 @@ const CreateAccountPage: React.FC<CreateAccountPageProps> = () => {
             {loading ? "Loading..." : "Create account"}
           </button>
           {createAccountMutationData?.createAccount.error && (
-            <span className="error justify-start">
+            <span role="alert" className="error justify-start">
               {createAccountMutationData.createAccount.error}
             </span>
           )}

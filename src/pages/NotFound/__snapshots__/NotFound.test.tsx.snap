@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NotFound /> should render 1`] = `
+<DocumentFragment>
+  <div
+    class="h-screen w-screen flex items-center justify-center"
+  >
+    <h2
+      class="title"
+    >
+      Page Not Found
+    </h2>
+  </div>
+</DocumentFragment>
+`;

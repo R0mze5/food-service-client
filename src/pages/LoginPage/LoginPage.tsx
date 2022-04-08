@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { gql, useMutation } from "@apollo/client";
 import { LoginMutation, LoginMutationVariables } from "api-types";
 import React from "react";
@@ -7,16 +8,8 @@ import { Link } from "react-router-dom";
 import { routerPaths } from "routers/routerPaths";
 import { isLoggedInVar, jwtToken } from "apollo/config";
 import { LOCALSTORAGE_TOKEN } from "constants/constants";
-
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($loginInput: LoginInput!) {
-    login(input: $loginInput) {
-      token
-      ok
-      error
-    }
-  }
-`;
+import { LOGIN_MUTATION } from "apollo/schemas";
+import ErrorTip from "components/ErrorTip";
 
 interface AuthFormFields {
   email: string;
@@ -34,7 +27,7 @@ const LoginPage: React.FC<LoginPageProps> = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthFormFields>();
+  } = useForm<AuthFormFields>({ mode: "onChange" });
 
   const onCompleted = ({ login }: LoginMutation) => {
     const { ok, token } = login;
@@ -65,13 +58,21 @@ const LoginPage: React.FC<LoginPageProps> = () => {
           className="grid gap-3 mt-5 px-5"
         >
           <input
-            {...register("email", { required: "Email is required" })}
-            type="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            })}
+            // type="email"
             placeholder="Email"
             className="input"
           />
           {errors.email && (
-            <span className="error">{errors.email.message}</span>
+            <ErrorTip>
+              {errors.email.type === "pattern"
+                ? "Wrong email"
+                : errors.email.message}
+            </ErrorTip>
           )}
           <input
             {...register("password", { required: "Password is required" })}
@@ -79,14 +80,12 @@ const LoginPage: React.FC<LoginPageProps> = () => {
             placeholder="Password"
             className="input"
           />
-          {errors.password && (
-            <span className="error">{errors.password.message}</span>
-          )}
+          {errors.password && <ErrorTip>{errors.password.message}</ErrorTip>}
           <button type="submit" className="button">
             {loading ? "Loading..." : "Log In"}
           </button>
           {loginMutationData?.login.error && (
-            <span className="error justify-start">
+            <span role="alert" className="error justify-start">
               {loginMutationData.login.error}
             </span>
           )}

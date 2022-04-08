@@ -1,6 +1,25 @@
 import { gql } from "@apollo/client";
 import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "./fragments";
 
+export const LOGIN_MUTATION = gql`
+  mutation LoginMutation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
+      token
+      ok
+      error
+    }
+  }
+`;
+
+export const CREATE_ACCOUNT_MUTATION = gql`
+  mutation CreateAccountMutation($createAccountInput: CreateAccountInput!) {
+    createAccount(input: $createAccountInput) {
+      ok
+      error
+    }
+  }
+`;
+
 export const GET_PROFILE = gql`
   query GetProfile {
     getProfile {
