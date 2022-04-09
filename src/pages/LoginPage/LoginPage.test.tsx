@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-wait-for-side-effects */
 import { ApolloProvider } from "@apollo/client";
 // import { createMockClient } from "@apollo/client/testing";
 import { createMockClient } from "mock-apollo-client";

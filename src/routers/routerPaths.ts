@@ -3,7 +3,7 @@ export const routerPaths = {
   signIn: "/",
   signUp: "/create-account",
   client: {
-    restaurants: "/restaurants",
+    restaurants: "/",
     search: "/search",
     category: "/category",
     restaurant: "/restaurant",

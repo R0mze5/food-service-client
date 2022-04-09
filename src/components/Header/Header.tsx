@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
           <div className="w-24">Logo</div>
           <span className="text-xs">
-            <Link to={routerPaths.editProfile}>
+            <Link to={routerPaths.editProfile} aria-label="Edit Profile">
               <FontAwesomeIcon icon={faUser} className="text-xl" />
             </Link>
           </span>

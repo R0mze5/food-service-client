@@ -5,7 +5,7 @@ import { useProfile } from "hooks/useProfile";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { VERIFY_EMAIL } from "apollo/schemas";
+import { EDIT_PROFILE } from "apollo/schemas";
 
 interface EditProfileFormFields {
   email?: string;
@@ -51,7 +51,7 @@ const EditProfilePage: React.FC = () => {
   };
 
   const [editProfileMutation, { loading, data: editProfileMutationData }] =
-    useMutation<EditProfile, EditProfileVariables>(VERIFY_EMAIL, {
+    useMutation<EditProfile, EditProfileVariables>(EDIT_PROFILE, {
       onCompleted,
     });
 
