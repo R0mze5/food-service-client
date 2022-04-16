@@ -23,7 +23,9 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
       <div
         className="py-28 bg-cover bg-center mb-3"
         style={{
-          backgroundImage: `url(${coverImage || undefined})`,
+          backgroundImage: `url(${
+            `${process.env.REACT_APP_API_URL}${coverImage}` || undefined
+          })`,
         }}
       />
       <h3 className="text-lg font-medium">{name}</h3>

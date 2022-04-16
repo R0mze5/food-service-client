@@ -5,8 +5,14 @@ import RestaurantDetailsPage from "pages/client/RestaurantDetailsPage";
 import RestaurantsPage from "pages/client/RestaurantsPage";
 import SearchPage from "pages/client/SearchPage";
 import ConfirmEmail from "pages/ConfirmEmail";
+import DashboardPage from "pages/delivery/DashboardPage";
 import EditProfilePage from "pages/EditProfilePage";
 import NotFound from "pages/NotFound";
+import OrderPage from "pages/OrderPage";
+import CreateDishPage from "pages/owner/CreateDishPage";
+import CreateRestaurantPage from "pages/owner/CreateRestaurantPage";
+import MyRestaurantPage from "pages/owner/MyRestaurantPage";
+import OwnerRestaurantsPage from "pages/owner/OwnerRestaurantsPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routerPaths } from "./routerPaths";
 
@@ -28,6 +34,31 @@ const ClientRoutes = (
   </>
 );
 
+const OwnerRoutes = (
+  <>
+    <Route
+      path={routerPaths.owner.restaurants}
+      element={<OwnerRestaurantsPage />}
+    />
+    <Route
+      path={routerPaths.owner.createRestaurant}
+      element={<CreateRestaurantPage />}
+    />
+    <Route
+      path={`${routerPaths.owner.restaurant}/:id`}
+      element={<MyRestaurantPage />}
+    />
+    <Route
+      path={`${routerPaths.owner.restaurant}/:id${routerPaths.owner.createDish}`}
+      element={<CreateDishPage />}
+    />
+  </>
+);
+
+const DeliveryRoutes = (
+  <Route path={routerPaths.delivery.dashboard} element={<DashboardPage />} />
+);
+
 const LoggedInRouter: React.FC = () => {
   const { data, error, loading } = useProfile();
 
@@ -44,8 +75,14 @@ const LoggedInRouter: React.FC = () => {
       <Header />
       <Routes>
         {data?.getProfile.role === "Client" && ClientRoutes}
+        {data?.getProfile.role === "Owner" && OwnerRoutes}
+        {data?.getProfile.role === "Delivery" && DeliveryRoutes}
         <Route path={routerPaths.editProfile} element={<EditProfilePage />} />
         <Route path={routerPaths.confirm} element={<ConfirmEmail />} />
+        <Route
+          path={`${routerPaths.orderDetails}/:id`}
+          element={<OrderPage />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

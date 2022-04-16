@@ -13,6 +13,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { LOGIN_MUTATION } from "apollo/schemas";
+import { LOCALSTORAGE_TOKEN } from "constants/constants";
 import LoginPage from "./LoginPage";
 
 describe("<LoginPage />", () => {
@@ -116,7 +117,7 @@ describe("<LoginPage />", () => {
 
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
     expect(localStorage.setItem).toHaveBeenCalledWith(
-      "token",
+      LOCALSTORAGE_TOKEN,
       mockResponse.token
     );
   });

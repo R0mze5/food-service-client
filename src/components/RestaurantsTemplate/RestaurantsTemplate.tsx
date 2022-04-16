@@ -3,8 +3,8 @@ import RestaurantCard from "components/RestaurantCard";
 import React from "react";
 
 interface RestaurantsTemplateProps {
-  page: number;
-  setPage: (page: number) => void;
+  page?: number;
+  setPage?: (page: number) => void;
   loading: boolean;
   totalPages?: number | null;
   restaurants?: RestaurantFragment[] | undefined;
@@ -18,36 +18,35 @@ const RestaurantsTemplate: React.FC<RestaurantsTemplateProps> = ({
   restaurants,
   children,
 }) => {
-  const onNextPageClick = () => setPage(page + 1);
-  const onPrevPageClick = () => setPage(page - 1);
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="px-5 mt-8">
-      <div className="max-w-screen-2xl mx-auto">
+    <div className="wrapper pt-8">
+      <div className="container">
         {children}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7 mt-16">
-          {restaurants?.map((restaurant) => {
-            return (
-              <RestaurantCard
-                key={restaurant.id}
-                coverImage={restaurant.coverImage}
-                categoryName={restaurant.category?.name || null}
-                name={restaurant.name}
-                id={restaurant.id}
-              />
-            );
-          })}
+          {restaurants?.length
+            ? restaurants?.map((restaurant) => {
+                return (
+                  <RestaurantCard
+                    key={restaurant.id}
+                    coverImage={restaurant.coverImage}
+                    categoryName={restaurant.category?.name || null}
+                    name={restaurant.name}
+                    id={restaurant.id}
+                  />
+                );
+              })
+            : "No restaurants found"}
         </div>
 
-        {Boolean(totalPages) && (
+        {Boolean(totalPages) && page && setPage && (
           <div className="flex justify-center items-center mt-10">
             {page > 1 && (
               <button
-                onClick={onPrevPageClick}
+                onClick={() => setPage(page - 1)}
                 className="button"
                 type="button"
               >
@@ -59,7 +58,7 @@ const RestaurantsTemplate: React.FC<RestaurantsTemplateProps> = ({
             </span>
             {page < (totalPages || 0) && (
               <button
-                onClick={onNextPageClick}
+                onClick={() => setPage(page + 1)}
                 className="button"
                 type="button"
               >

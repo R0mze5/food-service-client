@@ -17,7 +17,9 @@ const Header: React.FC = () => {
       )}
       <header className="py-4 px-5">
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between">
-          <div className="w-24">Logo</div>
+          <Link to={routerPaths.home} aria-label="Logo" className="w-24">
+            Logo
+          </Link>
           <span className="text-xs">
             <Link to={routerPaths.editProfile} aria-label="Edit Profile">
               <FontAwesomeIcon icon={faUser} className="text-xl" />

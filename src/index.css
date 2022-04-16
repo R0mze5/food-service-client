@@ -17,4 +17,16 @@
   @apply font-semibold text-2xl;
 }
 
+.wrapper {
+  @apply px-5;
+}
+
+.container {
+  @apply max-w-screen-2xl mx-auto;
+}
+
+.link {
+  @apply underline;
+}
+
 @tailwind utilities;
